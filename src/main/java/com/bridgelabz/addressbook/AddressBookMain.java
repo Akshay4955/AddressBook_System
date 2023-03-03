@@ -9,17 +9,26 @@ public class AddressBookMain {
     public static void main(String[] args) {
         System.out.println("Welcome to AddressBook program....!!!!");
         AddressBookMain addressBook = new AddressBookMain();
+
         addressBook.addNewContacts();
-        System.out.println("Before Editing Contacts: ");
+        System.out.println("After adding Contacts: ");
         for (Contact x : addressBook.contacts) {
             System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
                     + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
         }
+
         addressBook.editContact();
         System.out.println("After Editing Contacts: ");
         for (Contact x : addressBook.contacts) {
             System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
             + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
+        }
+
+        addressBook.deleteContact();
+        System.out.println("After deleting Contact");
+        for (Contact x : addressBook.contacts) {
+            System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
+                    + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
         }
     }
 
@@ -98,6 +107,16 @@ public class AddressBookMain {
 
                 }
 
+            }
+        }
+    }
+
+    public void deleteContact() {
+        System.out.println("Plz enter the name whose details you want to delete");
+        String name = input.next();
+        for (int i = 0; i < contacts.size(); i++) {
+            if (name.equalsIgnoreCase(contacts.get(i).firstName)) {
+                contacts.remove(i);
             }
         }
     }
