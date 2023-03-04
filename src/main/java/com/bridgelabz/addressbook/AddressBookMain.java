@@ -6,29 +6,39 @@ import java.util.Scanner;
 public class AddressBookMain {
     Scanner input = new Scanner(System.in);
     ArrayList<Contact> contacts = new ArrayList<>();
-    public static void main(String[] args) {
+    public static <editContact> void main(String[] args) {
         System.out.println("Welcome to AddressBook program....!!!!");
         AddressBookMain addressBook = new AddressBookMain();
-
+        Scanner input = new Scanner(System.in);
         addressBook.addNewContacts();
-        System.out.println("After adding Contacts: ");
-        for (Contact x : addressBook.contacts) {
-            System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
-                    + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
-        }
+        boolean loop = true;
+        while(loop) {
+            System.out.println("Plz enter what you want to perform : " + '\n' + "press 1 for Edit Contact" +
+                    '\n' + "press 2 for print contact" + '\n' + "Enter 3 for add contact" + '\n' +
+                    "Enter 4 for delete contact" + '\n' + "Enter 0 to exit");
+            final int editContact = 1, printContact = 2, addContact = 3, deleteContact = 4;
+            int choice = input.nextInt();
+            switch (choice) {
+                case editContact:
+                    addressBook.editContact();
+                    System.out.println("After editing contact");
+                    addressBook.printContacts();
+                    break;
+                case printContact:
+                    addressBook.printContacts();
+                    break;
+                case addContact:
+                    addressBook.addNewContacts();
+                    System.out.println("After adding contacts");
+                    addressBook.printContacts();
+                    break;
+                case deleteContact:
+                    addressBook.deleteContact();
+                    break;
+                default:
+                    loop = false;
 
-        addressBook.editContact();
-        System.out.println("After Editing Contacts: ");
-        for (Contact x : addressBook.contacts) {
-            System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
-            + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
-        }
-
-        addressBook.deleteContact();
-        System.out.println("After deleting Contact");
-        for (Contact x : addressBook.contacts) {
-            System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
-                    + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
+            }
         }
     }
 
@@ -64,49 +74,55 @@ public class AddressBookMain {
         String name = input.next();
         for (int i = 0; i < contacts.size(); i++) {
             if (name.equalsIgnoreCase(contacts.get(i).firstName)) {
-                System.out.println("What you want to change :" + '\n' + "Press 1 for first name " + '\n' +
-                        "Press 2 for last name " + '\n' + "Enter 3 for address " + '\n' + "Enter 4 for city"
-                + '\n' + "Enter 5 for state" + '\n' + "Enter 6 for zip code" + '\n' + "Enter 7 for phone number"
-                + '\n' + "Enter 8 for email");
-                int choice = input.nextInt();
-                switch (choice) {
-                    case 1:
-                        System.out.println("Please Enter the name to be updated");
-                        contacts.get(i).firstName = input.next();
-                        break;
-                    case 2:
-                        System.out.println("Please Enter the lastname to be updated");
-                        contacts.get(i).lastName = input.next();
-                        break;
-                    case 3:
-                        System.out.println("Please Enter the address to be updated");
-                        contacts.get(i).address = input.next();
-                        break;
-                    case 4:
-                        System.out.println("Please Enter the city to be updated");
-                        contacts.get(i).city = input.next();
-                        break;
-                    case 5:
-                        System.out.println("Please enter the state to be updated");
-                        contacts.get(i).state = input.next();
-                        break;
-                    case 6:
-                        System.out.println("Please Enter the zip code to be updated");
-                        contacts.get(i).zipCode = input.nextInt();
-                        break;
-                    case 7:
-                        System.out.println("Please Enter the phone number to be updated");
-                        contacts.get(i).phoneNumber = input.nextLong();
-                        break;
-                    case 8:
-                        System.out.println("Please Enter the email to be updated");
-                        contacts.get(i).email = input.next();
-                        break;
-                    default:
-                        System.out.println("You Entered wrong input");
+                boolean loop = true;
+                while (loop) {
+                    final int firstName = 1, lastName = 2, address = 3, city = 4, state = 5, zipCode = 6, phoneNumber = 7, email = 8, stopEditing = 0;
+                    System.out.println("What you want to change :" + '\n' + "Press 1 for first name " + '\n' +
+                            "Press 2 for last name " + '\n' + "Enter 3 for address " + '\n' + "Enter 4 for city"
+                            + '\n' + "Enter 5 for state" + '\n' + "Enter 6 for zip code" + '\n' + "Enter 7 for phone number"
+                            + '\n' + "Enter 8 for email" + '\n' + "Enter 0 to stop editing");
+                    int choice = input.nextInt();
+                    switch (choice) {
+                        case firstName:
+                            System.out.println("Please Enter the name to be updated");
+                            contacts.get(i).firstName = input.next();
+                            break;
+                        case lastName:
+                            System.out.println("Please Enter the lastname to be updated");
+                            contacts.get(i).lastName = input.next();
+                            break;
+                        case address:
+                            System.out.println("Please Enter the address to be updated");
+                            contacts.get(i).address = input.next();
+                            break;
+                        case city:
+                            System.out.println("Please Enter the city to be updated");
+                            contacts.get(i).city = input.next();
+                            break;
+                        case state:
+                            System.out.println("Please enter the state to be updated");
+                            contacts.get(i).state = input.next();
+                            break;
+                        case zipCode:
+                            System.out.println("Please Enter the zip code to be updated");
+                            contacts.get(i).zipCode = input.nextInt();
+                            break;
+                        case phoneNumber:
+                            System.out.println("Please Enter the phone number to be updated");
+                            contacts.get(i).phoneNumber = input.nextLong();
+                            break;
+                        case email:
+                            System.out.println("Please Enter the email to be updated");
+                            contacts.get(i).email = input.next();
+                            break;
+                        case stopEditing:
+                            loop = false;
+                            break;
+                        default:
+                            System.out.println("You Entered wrong input");
 
+                    }
                 }
-
             }
         }
     }
@@ -118,6 +134,13 @@ public class AddressBookMain {
             if (name.equalsIgnoreCase(contacts.get(i).firstName)) {
                 contacts.remove(i);
             }
+        }
+    }
+
+    public void printContacts() {
+        for (Contact x : contacts) {
+            System.out.println(x.firstName + " " + x.lastName + " " + x.address + " " + x.city
+                    + " " + x.state + " " + x.zipCode + " " + x.phoneNumber + " " + x.email);
         }
     }
 }
