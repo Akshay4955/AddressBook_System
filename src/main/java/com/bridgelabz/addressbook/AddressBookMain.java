@@ -1,9 +1,6 @@
 package com.bridgelabz.addressbook;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AddressBookMain {
@@ -21,8 +18,8 @@ public class AddressBookMain {
         while (loop) {
             System.out.println("Enter what you want to perform");
             System.out.println("Press 1 to create new address book" + '\n' + "Press 2 to perform operation " +
-                    "on existing address book" + '\n' + "Press 0 to exit");
-            final int createAddressBook = 1, operateExisting = 2, exit = 0;
+                    "on existing address book" + '\n' + "Press 3 to search contacts with city " + '\n' + "Press 0 to exit");
+            final int createAddressBook = 1, operateExisting = 2, searchContacts = 3, exit = 0;
             int option = input.nextInt();
             switch (option) {
                 case createAddressBook:
@@ -35,6 +32,9 @@ public class AddressBookMain {
                         addressBook.callAddressBook(addressBookMain.addressBooks.get(inputKey));
                     else
                         System.out.println("Entered key address book not available");
+                    break;
+                case  searchContacts:
+                    addressBookMain.searchContactsWithCity();
                     break;
                 case exit:
                     loop = false;
@@ -54,5 +54,16 @@ public class AddressBookMain {
             addressBooks.put(name, contacts);
         else
             System.out.println("Entered key is already available");
+    }
+
+    public void searchContactsWithCity() {
+        System.out.println("Please enter city name");
+        String cityName = input.next();
+        List<Contact> listOfContacts = addressBooks.values().stream().flatMap(p -> p.stream()).filter(p -> p.getCity().equals(cityName)).collect(Collectors.toList());
+        for (Contact contact : listOfContacts) {
+            if (contact.getCity().equals(cityName)) {
+                System.out.println(contact);
+            }
+        }
     }
 }
