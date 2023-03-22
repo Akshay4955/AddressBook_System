@@ -19,8 +19,8 @@ public class AddressBookMain {
             System.out.println("Enter what you want to perform");
             System.out.println("Press 1 to create new address book" + '\n' + "Press 2 to perform operation " +
                     "on existing address book" + '\n' + "Press 3 to search contacts with city " + '\n' + "Press 4 to get person with city" +
-                    '\n' + "Press 0 to exit");
-            final int createAddressBook = 1, operateExisting = 2, searchContacts = 3, getPersonWithCity = 4, exit = 0;
+                    '\n' + "Press 5 to get number of contacts by city" + '\n' + "Press 0 to exit");
+            final int createAddressBook = 1, operateExisting = 2, searchContacts = 3, getPersonWithCity = 4, getNoOfContactByCity = 5, exit = 0;
             int option = input.nextInt();
             switch (option) {
                 case createAddressBook:
@@ -39,6 +39,9 @@ public class AddressBookMain {
                     break;
                 case getPersonWithCity:
                     addressBookMain.getContactByCityAndState();
+                    break;
+                case getNoOfContactByCity:
+                    addressBookMain.getNumberContacts();
                     break;
                 case exit:
                     loop = false;
@@ -74,4 +77,12 @@ public class AddressBookMain {
         Map<String, List<Contact>> myContactListByState = myContactList.stream().collect(Collectors.groupingBy(Contact::getState));
         System.out.println(myContactListByState);
     }
+
+    public void getNumberContacts() {
+        System.out.println("Please enter city name");
+        String cityName = input.next();
+        long count = addressBooks.values().stream().flatMap(p -> p.stream()).filter(p -> p.getCity().equalsIgnoreCase(cityName)).count();
+        System.out.println("Count of contacts with " + cityName + " are " + count);
+    }
+
 }
