@@ -1,7 +1,6 @@
 package com.bridgelabz.addressbook;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 public class AddressBook {
     Scanner input = new Scanner(System.in);
@@ -157,3 +156,4 @@ public class AddressBook {
         System.out.println(contacts);
     }
 }
+
