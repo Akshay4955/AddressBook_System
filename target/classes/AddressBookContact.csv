@@ -1,6 +1,5 @@
-First Name,Last Name,Address,City,State,ZipCode,Phone Number,Email
-Akshay,Shedge,Rihe,Pune,Maharashtra,412115,879535081,akshayshedge11@gmail.com
-Rahul,Yamgar,Rihe,Pune,Maharashtra,412115,9762228223,rahulyamgar@gmail.com
-Mangesh,Matere,Ghotawade,Pune,Maharashtra,412115,7350939646,mangeshmatere@gmail.com
-Shreeraj,Shinde,Pimpari,Pune,Maharashtra,411033,9545639200,shreeshinde@gmail.com
-Yogesh,Shinde,Sangli,Sangli,Maharashtra,412106,976234587,yogeshshinde@gmail.com
+"address","city","email","firstName","lastName","phoneNumber","state","zipCode"
+"Morewdi","Pune","rahulyamagar","Rahul","Yamgat","862486","Maha","456"
+"Sangali","Sangali","fhjdfg","Yogesh","Shonde","7475","Maha","74547"
+"Rihe","Pune","akshayshedge11@","Akshay","Shedge","8796","Maha","412115"
+"Ghotawade","Pune","mangeshmatere@gmail.com","Mangesh","Matere","7350939646","Mah","412115"
