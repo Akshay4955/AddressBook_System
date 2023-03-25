@@ -2,6 +2,7 @@ package com.bridgelabz.addressbook;
 
 import com.bridgelabz.addressbookcsv.AddressBookCSV;
 import com.bridgelabz.addressbookfileio.AddressBookFileIO;
+import com.bridgelabz.addressbookjson.AddressBookJSON;
 
 import java.io.IOException;
 import java.util.*;
@@ -16,6 +17,7 @@ public class AddressBookMain {
         AddressBook addressBook = new AddressBook();
         AddressBookFileIO addressBookFileIO = new AddressBookFileIO();
         AddressBookCSV addressBookCSV = new AddressBookCSV();
+        AddressBookJSON addressBookJSON = new AddressBookJSON();
         addressBookMain.createAddressBook();
         boolean loop = true;
         while (loop) {
@@ -24,9 +26,11 @@ public class AddressBookMain {
                     '\n' + "Press 3 to search contacts with city " + '\n' + "Press 4 to get person with city" +
                     '\n' + "Press 5 to get number of contacts by city" + '\n' + "Press 6 to get sorted contacts by name/City/State/Zip" +
                     '\n' +"Press 7 for write to file" + '\n' +"Press 8 for read from file" + '\n' +"Press 9 for write to CSV" +
-                    '\n' +"Press 10 for read from CSV" + '\n' + "Press 0 to exit");
+                    '\n' +"Press 10 for read from CSV" + '\n' +"Press 11 for write to JSON" + '\n' +"Press 12 for read from JSON" +
+                    '\n' + "Press 0 to exit");
             final int createAddressBook = 1, operateExisting = 2, searchContacts = 3, getPersonWithCity = 4, getNoOfContactByCity = 5,
-                      getSortedContacts = 6, writeToFile = 7, readFromFile = 8, writeToCSV = 9, readFromCSV = 10, exit = 0;
+                      getSortedContacts = 6, writeToFile = 7, readFromFile = 8, writeToCSV = 9, readFromCSV = 10, writeToJSON = 11,
+                      readFromJSON = 12, exit = 0;
             try {
                 Scanner input = new Scanner(System.in);
                 int option = input.nextInt();
@@ -65,6 +69,12 @@ public class AddressBookMain {
                         break;
                     case readFromCSV:
                         addressBookCSV.readDataFromCSV();
+                        break;
+                    case writeToJSON:
+                        addressBookJSON.writeDataToJSON(addressBookMain.addressBooks);
+                        break;
+                    case readFromJSON:
+                        addressBookJSON.readDataFromJSON();
                         break;
                     case exit:
                         loop = false;
