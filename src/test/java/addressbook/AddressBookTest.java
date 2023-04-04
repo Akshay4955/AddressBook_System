@@ -6,9 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class AddressBookTest {
     @Test
@@ -34,5 +32,19 @@ public class AddressBookTest {
         LocalDate endDate = LocalDate.now();
         List<Contact> contactsForGivenDateRange = addressBook.getContactsForGivenDateRange(startDate, endDate);
         Assert.assertEquals(4, contactsForGivenDateRange.size());
+    }
+
+    @Test
+    public void givenCityAndContactInDB_WhenRetrievedContactByCity_ShouldMatchCount() {
+        AddressBook addressBook = new AddressBook();
+        int noOfContact = addressBook.getNoOfContactByCity("Pune");
+        Assert.assertEquals(3, noOfContact);
+    }
+
+    @Test
+    public void givenStateAndContactInDB_WhenRetrievedContactByState_ShouldMatchCount() {
+        AddressBook addressBook = new AddressBook();
+        int noOfContact = addressBook.getNoOfContactByState("Maharashtra");
+        Assert.assertEquals(6, noOfContact);
     }
 }

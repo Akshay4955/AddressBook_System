@@ -3,7 +3,6 @@ package com.bridgelabz.addressbook;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class AddressBookDBIO {
@@ -71,5 +70,17 @@ public class AddressBookDBIO {
                                     java.sql.Date.valueOf(startDate), java.sql.Date.valueOf(endDate));
         List<Contact> contactList = getListOfContacts(sql);
         return contactList;
+    }
+
+    public int getNoOfContactsByCity(String city) {
+        String sql = String.format("select * from contact inner join address on contact.address_id = address.address_id where city = '%s';", city);
+        List<Contact> listOfContacts = getListOfContacts(sql);
+        return listOfContacts.size();
+    }
+
+    public int getNoOfContactsByState(String state) {
+        String sql = String.format("select * from contact inner join address on contact.address_id = address.address_id where state = '%s';", state);
+        List<Contact> listOfContacts = getListOfContacts(sql);
+        return listOfContacts.size();
     }
 }

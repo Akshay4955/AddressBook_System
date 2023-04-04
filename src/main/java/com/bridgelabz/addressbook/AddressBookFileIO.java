@@ -1,7 +1,5 @@
 package com.bridgelabz.addressbook;
 
-import com.bridgelabz.addressbook.Contact;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;

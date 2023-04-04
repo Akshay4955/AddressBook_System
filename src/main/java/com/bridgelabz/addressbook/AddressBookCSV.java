@@ -1,6 +1,5 @@
 package com.bridgelabz.addressbook;
 
-import com.bridgelabz.addressbook.Contact;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;

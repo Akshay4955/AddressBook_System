@@ -306,5 +306,15 @@ public class AddressBook {
         List<Contact> nameList = contactList.stream().filter(Contact -> Contact.getFirstName().equalsIgnoreCase(name)).collect(Collectors.toList());
         return nameList.get(0);
     }
+
+
+    public int getNoOfContactByCity(String city) {
+        return new AddressBookDBIO().getNoOfContactsByCity(city);
+    }
+
+
+    public int getNoOfContactByState(String state) {
+        return new AddressBookDBIO().getNoOfContactsByState(state);
+    }
 }
 

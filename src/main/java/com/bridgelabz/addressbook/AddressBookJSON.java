@@ -1,6 +1,5 @@
 package com.bridgelabz.addressbook;
 
-import com.bridgelabz.addressbook.Contact;
 import com.google.gson.Gson;
 
 import java.io.*;
