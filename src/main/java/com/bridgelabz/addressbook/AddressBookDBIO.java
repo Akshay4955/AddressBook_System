@@ -22,6 +22,17 @@ public class AddressBookDBIO {
 
     public List<Contact> readDataFromDB() {
         String sql = "select * from contact inner join address on contact.address_id = address.address_id";
+        List<Contact> contactList = getListOfContacts(sql);
+        return contactList;
+    }
+
+    public List<Contact> getContactFromDB(String name) {
+        String sql = String.format("select * from contact inner join address on contact.address_id = address.address_id where contact.first_name = '%s';",name);
+        List<Contact> contactList = getListOfContacts(sql);
+        return contactList;
+    }
+
+    private List<Contact> getListOfContacts(String sql) {
         List<Contact> contactList = new ArrayList<>();
         try (Connection connection = getConnection()) {
             Statement statement = connection.createStatement();
@@ -43,4 +54,13 @@ public class AddressBookDBIO {
         return contactList;
     }
 
+    public int updateContactAddress(String firstName, String email) {
+        String sql = String.format("update contact set email = '%s' where first_name = '%s';",email, firstName);
+        try (Connection connection = getConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

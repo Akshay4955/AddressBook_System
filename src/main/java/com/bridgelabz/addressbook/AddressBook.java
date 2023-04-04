@@ -2,9 +2,12 @@ package com.bridgelabz.addressbook;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 import static com.bridgelabz.addressbook.AddressBookConstants.*;
 
 public class AddressBook {
+
+    List<Contact> contactList = new ArrayList<>();
 
     public enum IOService {FILE_IO, CSV_IO, JSON_IO, DB_IO}
 
@@ -273,7 +276,29 @@ public class AddressBook {
     }
 
     public List<Contact> readDBData() {
-        return new AddressBookDBIO().readDataFromDB();
+        this.contactList = new AddressBookDBIO().readDataFromDB();
+        return this.contactList;
+    }
+
+    public void updateContactAddress(String firstName, String email) {
+        int update = new AddressBookDBIO().updateContactAddress(firstName, email);
+        if (update > 0) {
+            Contact contact = contactList.stream().filter(Contact -> Contact.getFirstName().equalsIgnoreCase(firstName))
+                    .findFirst().orElse(null);
+            if (contact != null) {
+                contact.setEmail(email);
+            }
+        }
+    }
+
+    public boolean checkContactInSyncWithDB(String name) {
+        List<Contact> contactFromDB = new AddressBookDBIO().getContactFromDB(name);
+        return contactFromDB.get(0).equals(getContactWithName(name));
+    }
+
+    private Contact getContactWithName(String name) {
+        List<Contact> nameList = contactList.stream().filter(Contact -> Contact.getFirstName().equalsIgnoreCase(name)).collect(Collectors.toList());
+        return nameList.get(0);
     }
 }
 
