@@ -1,4 +1,4 @@
-package com.bridgelabz.addressbookcsv;
+package com.bridgelabz.addressbook;
 
 import com.bridgelabz.addressbook.Contact;
 import com.opencsv.CSVReader;

@@ -1,8 +1,12 @@
 package com.bridgelabz.addressbook;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import static com.bridgelabz.addressbook.AddressBookConstants.*;
 
 public class AddressBook {
+
+    public enum IOService {FILE_IO, CSV_IO, JSON_IO, DB_IO}
 
     public void callAddressBook(ArrayList<Contact> contacts) {
         boolean loop = true;
@@ -10,12 +14,11 @@ public class AddressBook {
             System.out.println("Plz enter what you want to perform : " + '\n' + "press 1 for Edit Contact" +
                     '\n' + "press 2 for print contact" + '\n' + "Enter 3 for add contact" + '\n' +
                     "Enter 4 for delete contact" + '\n' + "Enter 0 to exit");
-            final int editContact = 1, printContact = 2, addContact = 3, deleteContact = 4;
             try {
                 Scanner input = new Scanner(System.in);
                 int choice = input.nextInt();
                 switch (choice) {
-                    case editContact:
+                    case EDIT_CONTACT:
                         if (contacts.isEmpty())
                             System.out.println("Address book is empty");
                         else {
@@ -24,18 +27,18 @@ public class AddressBook {
                             printContacts(contacts);
                         }
                         break;
-                    case printContact:
+                    case PRINT_CONTACT:
                         if (contacts.isEmpty())
                             System.out.println("Address book is empty");
                         else
                             printContacts(contacts);
                         break;
-                    case addContact:
+                    case ADD_CONTACT:
                         addNewContacts(contacts);
                         System.out.println("After adding contacts");
                         printContacts(contacts);
                         break;
-                    case deleteContact:
+                    case DELETE_CONTACT:
                         if (contacts.isEmpty())
                             System.out.println("Address book is empty");
                         else
@@ -45,7 +48,7 @@ public class AddressBook {
                         loop = false;
 
                 }
-            }catch (InputMismatchException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("You entered wrong input. Please enter valid input");
             }
         }
@@ -85,7 +88,7 @@ public class AddressBook {
                 contact.setEmail(input.next());
                 contacts.add(contact);
             }
-        }catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             System.out.println("You entered wrong input. Please enter valid input");
         }
     }
@@ -99,46 +102,45 @@ public class AddressBook {
                 if (name.equalsIgnoreCase(contact.getFirstName())) {
                     boolean loop = true;
                     while (loop) {
-                        final int firstName = 1, lastName = 2, address = 3, city = 4, state = 5, zipCode = 6, phoneNumber = 7, email = 8, stopEditing = 0;
                         System.out.println("What you want to change :" + '\n' + "Press 1 for first name " + '\n' +
-                                "Press 2 for last name " + '\n' + "Enter 3 for address " + '\n' + "Enter 4 for city"
-                                + '\n' + "Enter 5 for state" + '\n' + "Enter 6 for zip code" + '\n' + "Enter 7 for phone number"
-                                + '\n' + "Enter 8 for email" + '\n' + "Enter 0 to stop editing");
+                                "Press 2 for last name " + '\n' + "Enter 3 for ADDRESS " + '\n' + "Enter 4 for city"
+                                + '\n' + "Enter 5 for STATE" + '\n' + "Enter 6 for zip code" + '\n' + "Enter 7 for phone number"
+                                + '\n' + "Enter 8 for EMAIL" + '\n' + "Enter 0 to stop editing");
                         int choice = input.nextInt();
                         switch (choice) {
-                            case firstName:
+                            case FIRST_NAME:
                                 System.out.println("Please Enter the name to be updated");
                                 contact.setFirstName(input.next());
                                 break;
-                            case lastName:
+                            case LAST_NAME:
                                 System.out.println("Please Enter the lastname to be updated");
                                 contact.setLastName(input.next());
                                 break;
-                            case address:
+                            case ADDRESS:
                                 System.out.println("Please Enter the address to be updated");
                                 contact.setAddress(input.next());
                                 break;
-                            case city:
+                            case CITY:
                                 System.out.println("Please Enter the city to be updated");
                                 contact.setCity(input.next());
                                 break;
-                            case state:
-                                System.out.println("Please enter the state to be updated");
+                            case STATE:
+                                System.out.println("Please enter the STATE to be updated");
                                 contact.setState(input.next());
                                 break;
-                            case zipCode:
+                            case ZIP_CODE:
                                 System.out.println("Please Enter the zip code to be updated");
                                 contact.setZipCode(input.nextInt());
                                 break;
-                            case phoneNumber:
+                            case PHONE_NUMBER:
                                 System.out.println("Please Enter the phone number to be updated");
                                 contact.setPhoneNumber(input.nextLong());
                                 break;
-                            case email:
-                                System.out.println("Please Enter the email to be updated");
+                            case EMAIL:
+                                System.out.println("Please Enter the EMAIL to be updated");
                                 contact.setEmail(input.next());
                                 break;
-                            case stopEditing:
+                            case STOP_EDITING:
                                 loop = false;
                                 break;
                             default:
@@ -149,7 +151,7 @@ public class AddressBook {
                 } else
                     System.out.println("Contact not available for entered name");
             }
-        }catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             System.out.println("You entered wrong input. Please enter valid input");
         }
     }
@@ -165,13 +167,113 @@ public class AddressBook {
                 } else
                     System.out.println("Contact not available for entered name");
             }
-        }catch (InputMismatchException e) {
+        } catch (InputMismatchException e) {
             System.out.println("You entered wrong input. Please enter valid input");
         }
     }
 
     public void printContacts(ArrayList<Contact> contacts) {
         System.out.println(contacts);
+    }
+
+    public void searchContactsWithCity(Map<String, ArrayList<Contact>> addressBooks) {
+        System.out.println("Please enter city name");
+        Scanner input = new Scanner(System.in);
+        String cityName = input.next();
+        List<Contact> listOfContacts = addressBooks.values().stream().flatMap(Collection::stream)
+                .filter(p -> p.getCity().equalsIgnoreCase(cityName)).collect(Collectors.toList());
+        System.out.println(listOfContacts);
+    }
+
+    public void getContactByCityAndState(Map<String, ArrayList<Contact>> addressBooks) {
+        List<Contact> myContactList = addressBooks.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        Map<String, List<Contact>> myContactListByCity = myContactList.stream().collect(Collectors.groupingBy(Contact::getCity));
+        System.out.println(myContactListByCity);
+        Map<String, List<Contact>> myContactListByState = myContactList.stream().collect(Collectors.groupingBy(Contact::getState));
+        System.out.println(myContactListByState);
+    }
+
+    public void getNumberContacts(Map<String, ArrayList<Contact>> addressBooks) {
+        System.out.println("Please enter choice parameter ");
+        System.out.println("Press 1 for City" + '\n' + "Press 2 for State");
+        try {
+            Scanner input = new Scanner(System.in);
+            int choice = input.nextInt();
+            switch (choice) {
+                case BY_CITY:
+                    System.out.println("Please enter city name");
+                    String cityName = input.next();
+                    long countByCity = addressBooks.values().stream().flatMap(Collection::stream).filter(p -> p.getCity().equalsIgnoreCase(cityName)).count();
+                    System.out.println("Count of contacts with " + cityName + " are " + countByCity);
+                    break;
+                case BY_STATE:
+                    System.out.println("Please enter State name");
+                    String stateName = input.next();
+                    long countByState = addressBooks.values().stream().flatMap(Collection::stream).filter(p -> p.getCity().equalsIgnoreCase(stateName)).count();
+                    System.out.println("Count of contacts with " + stateName + " are " + countByState);
+                    break;
+                default:
+                    System.out.println("You entered wrong input");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("You entered wrong input. Please enter valid input");
+        }
+
+    }
+
+    public void getSortedContacts(Map<String, ArrayList<Contact>> addressBooks) {
+        System.out.println("Please enter the choice parameter by which you want sort");
+        System.out.println("Press 1 for Name" + '\n' + "Press 2 for City" + '\n' + "Press 3 for State" + '\n' + "Press 4 for ZipCode");
+        try {
+            Scanner input = new Scanner(System.in);
+            int choice = input.nextInt();
+            switch (choice) {
+                case SORT_BY_NAME:
+                    System.out.println(addressBooks.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contact::getFirstName))).collect(Collectors.toList()));
+                    break;
+                case SORT_BY_CITY:
+                    System.out.println(addressBooks.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contact::getCity))).collect(Collectors.toList()));
+                    break;
+                case SORT_BY_STATE:
+                    System.out.println(addressBooks.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contact::getState))).collect(Collectors.toList()));
+                    break;
+                case SORT_BY_ZIPCODE:
+                    System.out.println(addressBooks.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contact::getZipCode))).collect(Collectors.toList()));
+                    break;
+                default:
+                    System.out.println("You entered wrong input");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("You entered wrong input. Please enter valid input");
+        }
+    }
+
+    public void writeData(IOService ioService, HashMap<String, ArrayList<Contact>> addressBooks) {
+        if (ioService == IOService.FILE_IO) {
+            new AddressBookFileIO().writeDataToFile(addressBooks);
+        } else if (ioService == IOService.CSV_IO) {
+            new AddressBookCSV().writeDataToCSV(addressBooks);
+        } else if (ioService == IOService.JSON_IO) {
+            new AddressBookJSON().writeDataToJSON(addressBooks);
+        }
+    }
+
+    public void readData(IOService ioService) {
+        if (ioService == IOService.FILE_IO) {
+            new AddressBookFileIO().readDataFromFile();
+        } else if (ioService == IOService.CSV_IO) {
+            new AddressBookCSV().readDataFromCSV();
+        } else if (ioService == IOService.JSON_IO) {
+            new AddressBookJSON().readDataFromJSON();
+        }
+    }
+
+    public List<Contact> readDBData() {
+        return new AddressBookDBIO().readDataFromDB();
     }
 }
 
