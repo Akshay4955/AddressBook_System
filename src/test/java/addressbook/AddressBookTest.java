@@ -5,7 +5,10 @@ import com.bridgelabz.addressbook.Contact;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddressBookTest {
     @Test
@@ -22,5 +25,14 @@ public class AddressBookTest {
         addressBook.updateContactAddress("Mangesh", "mangeshm72@gmail.com");
         boolean result = addressBook.checkContactInSyncWithDB("Mangesh");
         Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenContactInDB_WhenRetrievedForGivenDateRange_ShouldMatchCount() {
+        AddressBook addressBook = new AddressBook();
+        LocalDate startDate = LocalDate.of(2022, 04, 22);
+        LocalDate endDate = LocalDate.now();
+        List<Contact> contactsForGivenDateRange = addressBook.getContactsForGivenDateRange(startDate, endDate);
+        Assert.assertEquals(4, contactsForGivenDateRange.size());
     }
 }

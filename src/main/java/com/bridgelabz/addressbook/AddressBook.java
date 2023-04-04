@@ -1,5 +1,6 @@
 package com.bridgelabz.addressbook;
 
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -278,6 +279,11 @@ public class AddressBook {
     public List<Contact> readDBData() {
         this.contactList = new AddressBookDBIO().readDataFromDB();
         return this.contactList;
+    }
+
+    public List<Contact> getContactsForGivenDateRange(LocalDate startDate, LocalDate endDate) {
+        List<Contact> contactListDate = new AddressBookDBIO().getContactsForDateRange(startDate, endDate);
+        return contactListDate;
     }
 
     public void updateContactAddress(String firstName, String email) {

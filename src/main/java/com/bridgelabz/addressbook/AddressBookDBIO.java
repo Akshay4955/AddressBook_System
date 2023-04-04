@@ -1,7 +1,9 @@
 package com.bridgelabz.addressbook;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class AddressBookDBIO {
@@ -62,5 +64,12 @@ public class AddressBookDBIO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public List<Contact> getContactsForDateRange(LocalDate startDate, LocalDate endDate) {
+        String sql = String.format("select * from contact inner join address on contact.address_id = address.address_id where add_date between '%s' and '%s';",
+                                    java.sql.Date.valueOf(startDate), java.sql.Date.valueOf(endDate));
+        List<Contact> contactList = getListOfContacts(sql);
+        return contactList;
     }
 }
