@@ -19,7 +19,7 @@ public class AddressBookTest {
     @Test
     public void updateDataForGivenContact_WhenUpdated_ShouldSyncWithDatabase() {
         AddressBook addressBook = new AddressBook();
-        List<Contact> contactList = addressBook.readDBData();
+        addressBook.readDBData();
         addressBook.updateContactAddress("Mangesh", "mangeshm72@gmail.com");
         boolean result = addressBook.checkContactInSyncWithDB("Mangesh");
         Assert.assertTrue(result);
@@ -46,5 +46,23 @@ public class AddressBookTest {
         AddressBook addressBook = new AddressBook();
         int noOfContact = addressBook.getNoOfContactByState("Maharashtra");
         Assert.assertEquals(6, noOfContact);
+    }
+
+    @Test
+    public void givenNewContact_WhenAdded_ShouldMatchCount() {
+        AddressBook addressBook = new AddressBook();
+        addressBook.readDBData();
+        Contact contact = new Contact("Nadim", "Palla", "Ropale", "Pandharpur", "Solapur", 412113, 956174633, "nadimp7@gmail.com");
+        addressBook.addNewContactInDB(contact);
+        boolean result = addressBook.checkContactInSyncWithDB(contact.getFirstName());
+        Assert.assertTrue(result);
+    }
+
+    @Test
+    public void givenContact_WhenDeleted_ShouldMatchContactCount() {
+        AddressBook addressBook = new AddressBook();
+        addressBook.deleteContactFromDB("Nadim");
+        List<Contact> contactList = addressBook.readDBData();
+        Assert.assertEquals(6, contactList.size());
     }
 }

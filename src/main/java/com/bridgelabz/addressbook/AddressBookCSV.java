@@ -19,7 +19,7 @@ public class AddressBookCSV {
 
     public void writeDataToCSV(Map<String, ArrayList<Contact>> addressBook) {
         try (
-                Writer writer = Files.newBufferedWriter(Paths.get(CSV_FILE_PATH));
+                Writer writer = Files.newBufferedWriter(Paths.get(CSV_FILE_PATH))
         ) {
             StatefulBeanToCsvBuilder builder = new StatefulBeanToCsvBuilder<>(writer);
             StatefulBeanToCsv beanWriter = builder.build();

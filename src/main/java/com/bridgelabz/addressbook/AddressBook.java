@@ -266,6 +266,30 @@ public class AddressBook {
         }
     }
 
+
+    public void writeDataToDB(IOService ioService) {
+        if (ioService == IOService.DB_IO) {
+            System.out.println("Please enter choice from where you want write data to Database");
+            System.out.println("Press 1 for CSV" + '\n' + "Press 2 for JSON");
+            try {
+                Scanner input = new Scanner(System.in);
+                int choice = input.nextInt();
+                switch (choice) {
+                    case DATA_FROM_CSV:
+                        new AddressBookDBIO().addNewContactsFromCSV();
+                        break;
+                    case DATA_FROM_JSON:
+                        new AddressBookDBIO().addNewContactsFromJSON();
+                        break;
+                    default:
+                        System.out.println("You entered wrong input");
+                }
+            } catch (Exception e) {
+                System.out.println("You entered wrong input");
+            }
+        }
+    }
+
     public void readData(IOService ioService) {
         if (ioService == IOService.FILE_IO) {
             new AddressBookFileIO().readDataFromFile();
@@ -315,6 +339,16 @@ public class AddressBook {
 
     public int getNoOfContactByState(String state) {
         return new AddressBookDBIO().getNoOfContactsByState(state);
+    }
+
+
+    public void addNewContactInDB(Contact contact) {
+        int result = new AddressBookDBIO().addNewContact(contact);
+        if (result != 0) contactList.add(contact);
+    }
+
+    public void deleteContactFromDB(String name) {
+        new AddressBookDBIO().deleteContact(name);
     }
 }
 

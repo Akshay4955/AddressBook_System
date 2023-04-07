@@ -19,7 +19,7 @@ public class AddressBookMain {
                     '\n' + "Press 5 to get number of contacts by city" + '\n' + "Press 6 to get sorted contacts by name/City/State/Zip" +
                     '\n' +"Press 7 for write to file" + '\n' +"Press 8 for read from file" + '\n' +"Press 9 for write to CSV" +
                     '\n' +"Press 10 for read from CSV" + '\n' +"Press 11 for write to JSON" + '\n' +"Press 12 for read from JSON" +
-                    '\n' + "Press 0 to exit");
+                    '\n' + "Press 13 for write data to DB" + '\n' +  "Press 0 to exit");
             try {
                 Scanner input = new Scanner(System.in);
                 int option = input.nextInt();
@@ -64,6 +64,9 @@ public class AddressBookMain {
                         break;
                     case READ_FROM_JSON:
                         addressBook.readData(AddressBook.IOService.JSON_IO);
+                        break;
+                    case WRITE_TO_DB:
+                        addressBook.writeDataToDB(AddressBook.IOService.DB_IO);
                         break;
                     case EXIT:
                         loop = false;
